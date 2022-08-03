@@ -13,6 +13,7 @@
 
 // Variables
 var generateBtn = document.querySelector("#generate");
+var passwordText = document.querySelector("#password");
 var passLowercase = [
   "a",
   "b",
@@ -93,6 +94,8 @@ var passSymbols = [
   "?",
   "~",
 ];
+var finalCharacters = [];
+var newPassword = "";
 
 function generatePassword() {
   //have to use prompts per assignment rubric
@@ -100,45 +103,67 @@ function generatePassword() {
     "How long would you like your password to be? (Must be a number between 8 and 128)"
   );
   //parse int takes a string and changes it to int
-  parseInt(passwordLength);
+  var parsedLength = parseInt(passwordLength);
   //to validate if password is between 8 ands 128. may need to move
-  if (passwordLength < 8 || passwordLength > 128) {
+  if (parsedLength < 8 || parsedLength > 128) {
     alert(
       "Passwords must be at least 8 characters and no more than 128 characters"
     );
-    return;
+    return generatePassword();
   }
   //prompts are in generatePassword because they are supposed to occur after generatebtn is clicked
-  var lowercase = window.prompt(
+  var lowercase = window.confirm(
     "Does your password require lowercase letters? (Y/N)"
   );
-  lowercase.toLowerCase();
-  var uppercase = window.prompt(
+  //console.log(lowercase);
+  var uppercase = window.confirm(
     "Does your password require uppercase letters? (Y/N)"
   );
-  uppercase.toLowerCase();
-  var numbers = window.prompt("Does your password require numbers? (Y/N)");
-  numbers.toLowerCase();
-  var symbols = window.prompt("Does your password require symbols? (Y/N)");
-  symbols.toLowerCase();
+  var numbers = window.confirm("Does your password require numbers? (Y/N)");
+  var symbols = window.confirm("Does your password require symbols? (Y/N)");
 
-  //need something to concat if prompt === y
-  //probably also need to convert user input toLowercase(); or toUppercase(); for best results
-  //possibly use a switch statement. could use if/elif/else
-
-
+//
+  if (lowercase || uppercase || numbers || symbols) {
+    console.log("User selection passes validation");
+    if (lowercase) {
+      finalCharacters = finalCharacters.concat(passLowercase);
+      //console.log(finalCharacters);
+    }
+    if (uppercase) {
+      finalCharacters = finalCharacters.concat(passUppercase);
+      //console.log(finalCharacters);
+    }
+    if (numbers) {
+      finalCharacters = finalCharacters.concat(passNumbers);
+      //console.log(finalCharacters);
+    }
+    if (symbols) {
+      finalCharacters = finalCharacters.concat(passSymbols);
+      console.log(finalCharacters);
+    }
+    for (var i = 0; i < parsedLength; i++) {
+      let passwordChar =
+        finalCharacters[Math.floor(Math.random() * finalCharacters.length)];
+      newPassword += passwordChar;
+      console.log(newPassword);
+    }
+  } else {
+    alert("You must select at least one character set to proceed");
+    generatePassword();
+  }
+  return newPassword;
   //use for loop to get random assortment of items from criteria for password
-   /*for (i = 0; i < passwordLength; i++) {
-    newPassword += data[Math.floor(Math.random() * passwordData.length)];
+  /*function randomNumber(min, max) {
+  var value = Math.floor(Math.random() * (max - min + 1) + min);
+  return value;
+};
   } */
 }
 
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
- 
   passwordText.value = password;
-  var passwordText = document.querySelector("#password");
 }
 
 // Add event listener to generate button
