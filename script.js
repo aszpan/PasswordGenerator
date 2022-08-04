@@ -139,7 +139,7 @@ function generatePassword() {
     }
     if (symbols) {
       finalCharacters = finalCharacters.concat(passSymbols);
-      console.log(finalCharacters);
+      //console.log(finalCharacters);
     }
     for (var i = 0; i < parsedLength; i++) {
       let passwordChar =
@@ -152,12 +152,6 @@ function generatePassword() {
     generatePassword();
   }
   return newPassword;
-  //use for loop to get random assortment of items from criteria for password
-  /*function randomNumber(min, max) {
-  var value = Math.floor(Math.random() * (max - min + 1) + min);
-  return value;
-};
-  } */
 }
 
 // Write password to the #password input
