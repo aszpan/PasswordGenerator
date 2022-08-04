@@ -94,7 +94,9 @@ var passSymbols = [
   "?",
   "~",
 ];
+// finalCharacters is the array that we will concatenate the users specified criteria
 var finalCharacters = [];
+//newPassword will accumulate the characters for the new password from the for loop in GeneratePassword()
 var newPassword = "";
 
 function generatePassword() {
@@ -109,12 +111,15 @@ function generatePassword() {
     alert(
       "Passwords must be at least 8 characters and no more than 128 characters"
     );
+    //if the user did not make a valid selection, calling generatePassword(); will give them the option
+    //to try again
     return generatePassword();
   }
-  //prompts are in generatePassword because they are supposed to occur after generatebtn is clicked
+  //using .confirm because it returns a boolean
   var lowercase = window.confirm(
     "Does your password require lowercase letters? (Y/N)"
   );
+  //using console.log in this function to test as I go
   //console.log(lowercase);
   var uppercase = window.confirm(
     "Does your password require uppercase letters? (Y/N)"
@@ -122,7 +127,9 @@ function generatePassword() {
   var numbers = window.confirm("Does your password require numbers? (Y/N)");
   var symbols = window.confirm("Does your password require symbols? (Y/N)");
 
-//
+//this if statement is checking to verify at least one of these conditions is met
+//it is required that at least one of these options is selected to generate a password
+// aka if one of these returns true, then we can proceed with password generation
   if (lowercase || uppercase || numbers || symbols) {
     console.log("User selection passes validation");
     if (lowercase) {
@@ -147,10 +154,13 @@ function generatePassword() {
       newPassword += passwordChar;
       console.log(newPassword);
     }
+    //if the user did not select any criteria, then an alert pops up
+    //and generatePassword is called again, to give the user another chance at i
   } else {
     alert("You must select at least one character set to proceed");
     generatePassword();
   }
+  // return newPassword allows us to access the new password for the writePassword function
   return newPassword;
 }
 
